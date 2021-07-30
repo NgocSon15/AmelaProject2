@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CheckLogin;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    protected $carController;
+    protected $brandController;
+
+    public function __construct()
+    {
+        $this->carController = new CarController();
+        $this->brandController = new BrandController();
+    }
+
     public function showLogin()
     {
         return view('admin.login');
@@ -39,6 +49,6 @@ class AdminController extends Controller
     {
         // Xóa Session login, đưa người dùng về trạng thái chưa đăng nhập
         $request->session()->flush();
-        return redirect()->route('admin.home');
+        return redirect()->route('home');
     }
 }

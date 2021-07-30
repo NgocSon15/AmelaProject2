@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Car Seller | @yield('title')</title>
+    <title>Admin | @yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -45,18 +45,19 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('admin.home') }}" class="nav-link">Home</a>
+                    <a href="{{ route('home') }}" class="nav-link">Home</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('admin.showlogin') }}" class="nav-link">Đăng nhập</a>
-                </li>
                 @if(Session::has('login') && Session::get('login'))
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ route('admin.logout') }}" class="nav-link">Thoát</a>
+                        <a href="{{ route('logout') }}" class="nav-link">Thoát</a>
+                    </li>
+                @else
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a href="{{ route('show.login') }}" class="nav-link">Đăng nhập</a>
                     </li>
                 @endif
             </ul>
@@ -68,7 +69,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="{{ route('admin.home') }}" class="brand-link">
+        <a href="{{ route('home') }}" class="brand-link">
             <img src="{{ asset('storage/images/applogo3.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Siêu xe</span>
         </a>
@@ -90,12 +91,12 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.car.index') }}" class="nav-link @yield('active1')">
+                                <a href="{{ route('car.index') }}" class="nav-link @yield('active1')">
                                     <p>Danh sách xe</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.brand.index') }}" class="nav-link @yield('active2')">
+                                <a href="{{ route('brand.index') }}" class="nav-link @yield('active2')">
                                     <p>Hãng xe</p>
                                 </a>
                             </li>
@@ -126,7 +127,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
+            <div class="container-fluid" style="padding-bottom: 16px;">
                 @yield('content')
             </div>
         </section>
@@ -138,12 +139,12 @@
 
     @section('footer')
         <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 3.1.0
-        </div>
-    </footer>
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.1.0
+            </div>
+        </footer>
     @show
 
 </div>

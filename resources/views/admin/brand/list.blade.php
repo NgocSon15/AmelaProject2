@@ -12,7 +12,7 @@
             </div>
         @endif
     </div>
-    <a href="{{ route('admin.brand.create') }}" class="btn btn-primary" style="margin-bottom: 10px;">Thêm mới</a>
+    <a href="{{ route('brand.create') }}" class="btn btn-primary" style="margin-bottom: 10px;">Thêm mới</a>
     <div class="card">
         <div class="card-body p-0">
             <table class="table table-striped">
@@ -20,6 +20,9 @@
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Tên nhãn hiệu</th>
+                    <th>Ảnh</th>
+                    <th>Ngày thành lập</th>
+                    <th>Trụ sở</th>
                     <th>Thao tác</th>
                 </tr>
                 </thead>
@@ -28,10 +31,13 @@
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $brand->name }}</td>
+                        <td><img src="{{ asset('storage/'. $brand->image) }}" style="max-width: 100px;"></td>
+                        <td>{{ $brand->founded_date }}</td>
+                        <td>{{ $brand->headquarter }}</td>
                         <td class="d-flex">
-                            <a href="{{ route('admin.brand.show', $brand->id) }}" class="btn-sm btn-info mr-1">Xem</a>
-                            <a href="{{ route('admin.brand.edit', $brand->id) }}" class="btn-sm btn-secondary mr-1">Sửa</a>
-                            <a href="{{ route('admin.brand.delete', $brand->id) }}" class="btn-sm btn-danger">Xóa</a>
+                            <a href="{{ route('brand.show', $brand->id) }}" class="btn-sm btn-info mr-1">Xem</a>
+                            <a href="{{ route('brand.edit', $brand->id) }}" class="btn-sm btn-secondary mr-1">Sửa</a>
+                            <a href="{{ route('brand.delete', $brand->id) }}" class="btn-sm btn-danger">Xóa</a>
                         </td>
                     </tr>
                 @endforeach
@@ -41,11 +47,7 @@
         <!-- /.card-body -->
         <div class="card-footer clearfix">
             <ul class="pagination pagination-sm m-0 float-right">
-                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                {{ $brands->links() }}
             </ul>
         </div>
     </div>

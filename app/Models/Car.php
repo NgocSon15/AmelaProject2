@@ -11,6 +11,11 @@ class Car extends Model
 
     protected $table = 'cars';
 
+    public function carModel()
+    {
+        return $this->belongsTo(CarModel::class, 'carmodel_id');
+    }
+
     public function brand()
     {
         return $this->belongsTo(Brand::class);

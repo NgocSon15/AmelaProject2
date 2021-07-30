@@ -13,7 +13,7 @@
         @endif
     </div>
     <div class="d-flex">
-        <form class="navbar-form navbar-left" action="{{ route('admin.car.search') }}">
+        <form class="navbar-form navbar-left" action="{{ route('car.search') }}">
             @csrf
             <div class="d-flex">
                 <div class="form-group">
@@ -30,12 +30,12 @@
             <a class="btn btn-primary mb-3" href="" data-toggle="modal" data-target="#brandModal">
                 Lọc
             </a>
-            <a href="{{ route('admin.car.create') }}" class="btn btn-success mb-3 ml-1">
+            <a href="{{ route('car.create') }}" class="btn btn-success mb-3 ml-1">
                 Thêm mới
             </a>
         </div>
     </div>
-    <div class="card">
+    <div class="card" style="margin: 0">
         <div class="card-body p-0">
             <table class="table table-striped">
                 <thead>
@@ -43,6 +43,9 @@
                     <th style="width: 10px">#</th>
                     <th>Tên xe</th>
                     <th>Giá thành</th>
+                    <th>Nhãn hiệu</th>
+                    <th>Hình ảnh</th>
+                    <th>Số lượng</th>
                     <th>Thao tác</th>
                 </tr>
                 </thead>
@@ -50,12 +53,15 @@
                 @foreach($cars as $key => $car)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $car->car_name }}</td>
+                        <td>{{ $car->name }}</td>
                         <td>{{ $car->price }}</td>
+                        <td>{{ $car->brand->name }}</td>
+                        <td><img src="{{ asset('storage/'. $car->image) }}" style="max-width: 100px"></td>
+                        <td>{{ $car->quantity }}</td>
                         <td class="d-flex">
-                            <a href="{{ route('admin.car.show', $car->id) }}" class="btn-sm btn-info mr-1">Xem</a>
-                            <a href="{{ route('admin.car.edit', $car->id) }}" class="btn-sm btn-secondary mr-1">Sửa</a>
-                            <a href="{{ route('admin.car.delete', $car->id) }}" class="btn-sm btn-danger">Xóa</a>
+                            <a href="{{ route('car.show', $car->id) }}" class="btn-sm btn-info mr-1">Xem</a>
+                            <a href="{{ route('car.edit', $car->id) }}" class="btn-sm btn-secondary mr-1">Sửa</a>
+                            <a href="{{ route('car.delete', $car->id) }}" class="btn-sm btn-danger">Xóa</a>
                         </td>
                     </tr>
                 @endforeach
@@ -72,7 +78,7 @@
         <div class="modal fade" id="brandModal" role="dialog">
             <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
-                <form action="{{ route('admin.car.filterByBrand') }}" method="get">
+                <form action="{{ route('car.filterByBrand') }}" method="get">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">

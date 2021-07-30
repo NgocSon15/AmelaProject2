@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Middleware\CheckLogin;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,48 +18,38 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.home');
-})->name('home');
+Route::get('/', [UserController::class, 'home'])->name('home');
 
-Route::get('/login', [CustomerController::class, 'showLogin'])->name('showlogin');
+Route::get('/login', [UserController::class, 'showLogin'])->name('show.login');
+Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::get('/register', [UserController::class, 'showRegister'])->name('show.register');
+Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::post('/login', [CustomerController::class, 'login'])->name('customer.login');
-
-Route::get('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
-
-Route::prefix('admin')->group(function() {
-    Route::get('/', function () {
-        return view('admin.home');
-    })->name('admin.home');
-
-    Route::get('/login', [AdminController::class, 'showLogin'])->name('admin.showlogin');
-
-    Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
-
-    Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
+Route::middleware(CheckLogin::class)->group(function() {
     Route::prefix('car')->group(function () {
-        Route::get('/', [CarController::class, 'index'])->name('admin.car.index');
-        Route::get('/create', [CarController::class, 'create'])->name('admin.car.create');
-        Route::post('/create', [CarController::class, 'store'])->name('admin.car.store');
-        Route::get('show/{id}', [CarController::class, 'show'])->name('admin.car.show');
-        Route::get('edit/{id}', [CarController::class, 'edit'])->name('admin.car.edit');
-        Route::post('edit/{id}', [CarController::class, 'update'])->name('admin.car.update');
-        Route::get('delete/{id}', [CarController::class, 'delete'])->name('admin.car.delete');
-        Route::post('delete/{id}', [CarController::class, 'destroy'])->name('admin.car.destroy');
-        Route::get('/filter', [CarController::class, 'filterByBrand'])->name('admin.car.filterByBrand');
-        Route::get('/search', [CarController::class, 'search'])->name('admin.car.search');
+        Route::get('/', [CarController::class, 'index'])->name('car.index');
+        Route::get('/create', [CarController::class, 'create'])->name('car.create');
+        Route::post('/create', [CarController::class, 'store'])->name('car.store');
+        Route::get('show/{id}', [CarController::class, 'show'])->name('car.show');
+        Route::get('edit/{id}', [CarController::class, 'edit'])->name('car.edit');
+        Route::post('edit/{id}', [CarController::class, 'update'])->name('car.update');
+        Route::get('delete/{id}', [CarController::class, 'delete'])->name('car.delete');
+        Route::post('delete/{id}', [CarController::class, 'destroy'])->name('car.destroy');
+        Route::get('/filter', [CarController::class, 'filterByBrand'])->name('car.filterByBrand');
+        Route::get('/search', [CarController::class, 'search'])->name('car.search');
     });
 
     Route::prefix('brand')->group(function () {
-        Route::get('/', [BrandController::class, 'index'])->name('admin.brand.index');
-        Route::get('/create', [BrandController::class, 'create'])->name('admin.brand.create');
-        Route::post('/create', [BrandController::class, 'store'])->name('admin.brand.store');
-        Route::get('show/{id}', [BrandController::class, 'show'])->name('admin.brand.show');
-        Route::get('edit/{id}', [BrandController::class, 'edit'])->name('admin.brand.edit');
-        Route::post('edit/{id}', [BrandController::class, 'update'])->name('admin.brand.update');
-        Route::get('delete/{id}', [BrandController::class, 'delete'])->name('admin.brand.delete');
-        Route::post('delete/{id}', [BrandController::class, 'destroy'])->name('admin.brand.destroy');
+        Route::get('/', [BrandController::class, 'index'])->name('brand.index');
+        Route::get('/create', [BrandController::class, 'create'])->name('brand.create');
+        Route::post('/create', [BrandController::class, 'store'])->name('brand.store');
+        Route::get('show/{id}', [BrandController::class, 'show'])->name('brand.show');
+        Route::get('edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+        Route::post('edit/{id}', [BrandController::class, 'update'])->name('brand.update');
+        Route::get('delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+        Route::post('delete/{id}', [BrandController::class, 'destroy'])->name('brand.destroy');
     });
 });
+
+

@@ -5,64 +5,73 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CarRequest;
 use App\Models\Car;
 use App\Models\Brand;
+use App\Models\CarModel;
+use App\Services\CarServiceImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Middleware\CheckLogin;
 
 class CarController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(CheckLogin::class);
-    }
+    protected $carService;
 
-    public function home()
+    public function __construct(CarServiceImpl $carService)
     {
-        $cars = Car::paginate(8);
-        $brands = Brand::all();
-        return view('admin.home');
+        $this->carService = $carService;
     }
 
     public function index()
     {
         $cars = Car::paginate(5);
         $brands = Brand::all();
-
         return view('admin.car.list', compact('cars', 'brands'));
     }
 
     public function create()
     {
         $brands = Brand::all();
-        return view('admin.car.create', compact('brands'));
+        $carModels = CarModel::all();
+        return view('admin.car.create', compact('brands', 'carModels'));
     }
 
     public function store(CarRequest $request)
     {
         $car = new Car();
-        $car->car_name = $request->input('name');
+        $car->name = $request->input('name');
         $car->price = $request->input('price');
         $car->brand_id = $request->input('brand_id');
+        $car->carmodel_id = $request->input('car_model_id');
+        $car->fuel = $request->input('fuel');
+        $car->gearbox = $request->input('gearbox');
+        $car->origin = $request->input('origin');
+        $car->color = $request->input('color');
+        $car->manufactured_date = $request->input('manufactured_date');
+        $car->engine_capacity = $request->input('engine_capacity');
+        $car->seat_number = $request->input('seat_number');
+        $car->door_number = $request->input('door_number');
+        $car->quantity = $request->input('quantity');
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $path = $image->store('images', 'public');
-            $car->image_url = $path;
+            $car->image = $path;
         } else {
-            $car->image_url = "";
+            $car->image = "";
         }
 
         $car->description = $request->input('description');
         $car->save();
 
         Session::flash('success', 'Thêm mới thành công');
-        return redirect()->route('admin.car.index');
+        return redirect()->route('car.index');
     }
 
     public function show($id)
     {
         $car = Car::findOrFail($id);
+        $car->view_count += 1;
+        $car->save();
+        $carModels = CarModel::first();
         return view('admin.car.show', compact('car'));
     }
 
@@ -70,18 +79,29 @@ class CarController extends Controller
     {
         $car = Car::findOrFail($id);
         $brands = Brand::all();
-        return view('admin,car.edit', compact('car', 'brands'));
+        $carModels = CarModel::all();
+        return view('admin.car.edit', compact('car', 'brands', 'carModels'));
     }
 
     public function update(Request $request, $id)
     {
         $car = Car::findOrFail($id);
-        $car->car_name = $request->input('name');
+        $car->name = $request->input('name');
         $car->price = $request->input('price');
         $car->brand_id = $request->input('brand_id');
+        $car->carmodel_id = $request->input('car_model_id');
+        $car->fuel = $request->input('fuel');
+        $car->gearbox = $request->input('gearbox');
+        $car->origin = $request->input('origin');
+        $car->color = $request->input('color');
+        $car->manufactured_date = $request->input('manufactured_date');
+        $car->engine_capacity = $request->input('engine_capacity');
+        $car->seat_number = $request->input('seat_number');
+        $car->door_number = $request->input('door_number');
+        $car->quantity = $request->input('quantity');
 
         if ($request->hasFile('image')) {
-            $currentImg = $car->image_url;
+            $currentImg = $car->image;
             if($currentImg)
             {
                 Storage::delete('/public/'.$currentImg);
@@ -89,14 +109,14 @@ class CarController extends Controller
 
             $image = $request->file('image');
             $path = $image->store('images', 'public');
-            $car->image_url = $path;
+            $car->image = $path;
         }
 
         $car->description = $request->input('description');
         $car->save();
 
         Session::flash('success', 'Sửa thông tin thành công');
-        return redirect()->route('admin.car.index');
+        return redirect()->route('car.index');
     }
 
     public function delete($id)
@@ -108,7 +128,7 @@ class CarController extends Controller
     public function destroy($id)
     {
         $car = Car::findOrFail($id);
-        $image = $car->image_url;
+        $image = $car->image;
 
         if($image)
         {
@@ -118,7 +138,7 @@ class CarController extends Controller
         $car->delete();
 
         Session::flash('success', 'Xóa thành công');
-        return redirect()->route('admin.car.index');
+        return redirect()->route('car.index');
     }
 
     public function filterByBrand(Request $request){
@@ -139,9 +159,8 @@ class CarController extends Controller
         if (!$keyword) {
             return redirect()->route('admin.car.index');
         }
-        $cars = Car::where('car_name', 'LIKE', '%' . $keyword . '%')->paginate(5);
+        $cars = Car::where('name', 'LIKE', '%' . $keyword . '%')->paginate(5);
         $brands = Brand::all();
         return view('admin.car.list', compact('cars', 'brands', 'keyword'));
     }
-
 }

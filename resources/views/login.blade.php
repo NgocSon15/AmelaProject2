@@ -19,7 +19,7 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="{{ route('admin.home') }}" class="h1"><img src="{{ asset('storage/images/applogo.png') }}" style="max-width: 200px"></a>
+            <a href="{{ route('home') }}" class="h1"><img src="{{ asset('storage/images/applogo.png') }}" style="max-width: 200px"></a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Đăng nhập hệ thống</p>
@@ -29,7 +29,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.login') }}" method="post">
+            <form action="{{ route('login') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Email" name="username">

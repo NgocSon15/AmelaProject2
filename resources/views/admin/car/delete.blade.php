@@ -4,7 +4,7 @@
 @section('active1', 'active')
 @section('content-name', 'Xóa xe')
 @section('content')
-    <p>Bạn có muốn xóa xe {{ $car->car_name }}?</p>
+    <p>Bạn có muốn xóa xe {{ $car->name }}?</p>
     <form method="post" action="{{ route('admin.car.destroy', $car->id) }}">
         @csrf
         <div class="d-flex">

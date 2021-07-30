@@ -18,7 +18,7 @@ class CheckLogin
     {
         if(!$request->session()->has('login') || !$request->session()->get('login'))
         {
-            return redirect()->route('admin.showlogin');
+            return redirect()->route('show.login');
         }
 
         return $next($request);

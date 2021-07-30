@@ -55,9 +55,12 @@
                             </div>
                             <div class="top_bar_user">
                                 <div class="user_icon"><img src="{{ asset('frontend/images/user.svg') }}" alt=""></div>
-
-                                <div><a href="#">Register</a></div>
-                                <div><a href="{{ route('showlogin') }}">Sign in</a></div>
+                                @if(Session::has('login') && Session::get('login'))
+                                    <div><a href="{{ route('logout') }}">Thoát</a></div>
+                                @else
+                                    <div><a href="{{ route('show.register') }}">Đăng ký</a></div>
+                                    <div><a href="{{ route('show.login') }}">Đăng nhập</a></div>
+                                @endif
                             </div>
                         </div>
                     </div>
