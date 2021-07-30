@@ -15,4 +15,8 @@ Những chức năng đã làm:
 - Ngày 28/07/2021:  
     + Ghép template cho giao diện khách hàng
     + Thêm chức năng đăng nhập cho admin
-    + Thêm middleware checkLogin để check admin đăng nhập hay chưa
+    + Thêm middleware checkLogin
+- 29/07/2021:
+    + Thêm chức năng đăng ký thành viên, đăng nhập
+    + Sửa giao diện, thêm, hiển thị và sửa của admin
+    + Tạo api cho đối tượng ô tô
