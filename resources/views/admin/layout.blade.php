@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- flag-icon-css -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/flag-icon-css/css/flag-icon.min.css') }}">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
@@ -45,12 +47,25 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('home') }}" class="nav-link">Home</a>
+                    <a href="{{ route('home') }}" class="nav-link">{{ __('language.home') }}</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="flag-icon @if(App::currentLocale() == 'en') {{ 'flag-icon-us' }} @else {{ 'flag-icon-vn' }} @endif"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right p-0">
+                        <a href="{{ route('change.language', ['en']) }}" class="dropdown-item @if(App::currentLocale() == 'en') {{'active'}} @endif">
+                            <i class="flag-icon flag-icon-us mr-2"></i> English
+                        </a>
+                        <a href="{{ route('change.language', ['vi']) }}" class="dropdown-item @if(App::currentLocale() == 'vi') {{'active'}} @endif">
+                            <i class="flag-icon flag-icon-vn mr-2"></i> Vietnam
+                        </a>
+                    </div>
+                </li>
                 @if(Session::has('login') && Session::get('login'))
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="{{ route('logout') }}" class="nav-link">Thoát</a>
@@ -71,7 +86,7 @@
         <!-- Brand Logo -->
         <a href="{{ route('home') }}" class="brand-link">
             <img src="{{ asset('storage/images/applogo3.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">Siêu xe</span>
+            <span class="brand-text font-weight-light">Super Auto</span>
         </a>
 
         <!-- Sidebar -->
@@ -153,7 +168,7 @@
 <!-- jQuery -->
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>public/
+<script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -180,5 +195,6 @@
 <script src="{{ asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
+@yield('customScript')
 </body>
 </html>

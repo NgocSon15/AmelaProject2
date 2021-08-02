@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BrandRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -9,10 +10,16 @@ use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $brands = Brand::paginate(5);
-        return view('admin.brand.list', compact('brands'));
+
+        if ($request->ajax())
+        {
+            return view('admin.brand.listContent', compact('brands'));
+        } else {
+            return view('admin.brand.list', compact('brands'));
+        }
     }
 
     public function create()
@@ -20,7 +27,7 @@ class BrandController extends Controller
         return view('admin.brand.create');
     }
 
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         $brand = new Brand();
         $brand->name = $request->input('name');
@@ -52,7 +59,7 @@ class BrandController extends Controller
         return view('admin.brand.edit', compact('brand'));
     }
 
-    public function update(Request $request, $id)
+    public function update(BrandRequest $request, $id)
     {
         $brand = Brand::findOrFail($id);
         $brand->name = $request->input('name');

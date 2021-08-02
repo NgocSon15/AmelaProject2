@@ -35,45 +35,8 @@
             </a>
         </div>
     </div>
-    <div class="card" style="margin: 0">
-        <div class="card-body p-0">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Tên xe</th>
-                    <th>Giá thành</th>
-                    <th>Nhãn hiệu</th>
-                    <th>Hình ảnh</th>
-                    <th>Số lượng</th>
-                    <th>Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($cars as $key => $car)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{ $car->name }}</td>
-                        <td>{{ $car->price }}</td>
-                        <td>{{ $car->brand->name }}</td>
-                        <td><img src="{{ asset('storage/'. $car->image) }}" style="max-width: 100px"></td>
-                        <td>{{ $car->quantity }}</td>
-                        <td class="d-flex">
-                            <a href="{{ route('car.show', $car->id) }}" class="btn-sm btn-info mr-1">Xem</a>
-                            <a href="{{ route('car.edit', $car->id) }}" class="btn-sm btn-secondary mr-1">Sửa</a>
-                            <a href="{{ route('car.delete', $car->id) }}" class="btn-sm btn-danger">Xóa</a>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-                {{ $cars->links() }}
-            </ul>
-        </div>
+    <div class="card" style="margin: 0" id="table_data">
+        @include('admin.car.listContent')
 
         <div class="modal fade" id="brandModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -122,5 +85,39 @@
             </div>
         </div>
     </div>
+@endsection
+@section('customScript')
+    <!-- Phân trang -->
+    <script>
+        $(document).ready(function()
+        {
+            $(document).on('click', '.pagination a', function (event) {
+                event.preventDefault();
+                var page = $(this).attr('href').split('page=')[1];
+                fetch_data(page);
+            });
+
+            function fetch_data(page)
+            {
+                $.ajax({
+                    //'url': '/car/fetch_data?page=' + page,
+                    'url': '{{ route('car.fetch_data') }}?page=' + page,
+                    success:function (brand)
+                    {
+                        $('#table_data').html(brand);
+                    }
+                })
+            }
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.number_output').each(function () {
+                var value = $(this).html();
+                value = Intl.NumberFormat().format(value);
+                $(this).html(value);
+            })
+        })
+    </script>
 @endsection
 

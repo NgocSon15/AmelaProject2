@@ -20,11 +20,16 @@ class CarController extends Controller
         $this->carService = $carService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $cars = Car::paginate(5);
+        $cars = $this->carService->getAll();
         $brands = Brand::all();
-        return view('admin.car.list', compact('cars', 'brands'));
+        if ($request->ajax())
+        {
+            return view('admin.car.listContent', compact('cars'));
+        } else {
+            return view('admin.car.list', compact('cars', 'brands'));
+        }
     }
 
     public function create()
@@ -37,29 +42,27 @@ class CarController extends Controller
     public function store(CarRequest $request)
     {
         $car = new Car();
-        $car->name = $request->input('name');
-        $car->price = $request->input('price');
-        $car->brand_id = $request->input('brand_id');
-        $car->carmodel_id = $request->input('car_model_id');
-        $car->fuel = $request->input('fuel');
-        $car->gearbox = $request->input('gearbox');
-        $car->origin = $request->input('origin');
-        $car->color = $request->input('color');
-        $car->manufactured_date = $request->input('manufactured_date');
-        $car->engine_capacity = $request->input('engine_capacity');
-        $car->seat_number = $request->input('seat_number');
-        $car->door_number = $request->input('door_number');
-        $car->quantity = $request->input('quantity');
+        $car->name = $request->name;
+        $car->price =  $request->price;
+        $car->brand_id =  $request->brand_id;
+        $car->carmodel_id =  $request->car_model_id;
+        $car->fuel =  $request->fuel;
+        $car->gearbox =  $request->gearbox;
+        $car->origin =  $request->origin;
+        $car->color =  $request->color;
+        $car->manufactured_date =  $request->manufactured_date;
+        $car->engine_capacity =  $request->engine_capacity;
+        $car->seat_number =  $request->seat_number;
+        $car->door_number =  $request->door_number;
+        $car->quantity =  $request->quantity;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $path = $image->store('images', 'public');
             $car->image = $path;
-        } else {
-            $car->image = "";
         }
 
-        $car->description = $request->input('description');
+        $car->description =  $request->description;
         $car->save();
 
         Session::flash('success', 'Thêm mới thành công');

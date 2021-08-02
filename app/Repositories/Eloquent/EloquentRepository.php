@@ -29,7 +29,7 @@ abstract class EloquentRepository implements Repository
 
     public function getAll()
     {
-        $result = $this->model->all();
+        $result = $this->model->paginate(5);
         return $result;
     }
 

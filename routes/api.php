@@ -19,4 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('cars', CarControllerApi::class);
+
+Route::get('/cars', [CarControllerApi::class, 'index'])->name('cars.api.index');
+Route::get('/cars/{carId}', [CarControllerApi::class, 'show'])->name('cars.api.show');
+Route::post('/cars', [CarControllerApi::class, 'store'])->name('cars.api.store');
+Route::put('/cars/{carId}', [CarControllerApi::class, 'update'])->name('cars.api.update');
+Route::delete('/cars/{carId}', [CarControllerApi::class, 'destroy'])->name('cars.api.destroy');
+

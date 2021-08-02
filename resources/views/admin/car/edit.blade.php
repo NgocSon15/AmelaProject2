@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label for="price">Giá:</label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="Nhập giá xe" value="{{ $car->price }}">
+                <input type="text" class="number-input form-control" id="price" name="price" placeholder="Nhập giá xe" value="{{ $car->price }}">
                 @if($errors->has('price'))
                     @foreach($errors->get('price') as $message)
                         <p class="text-danger">
@@ -213,7 +213,7 @@
             </div>
             <div class="form-group">
                 <label for="quantity">Số lượng:</label>
-                <input type="text" class="form-control"  name="quantity" value="{{ $car->quantity }}">
+                <input type="text" class="number-input form-control"  name="quantity" value="{{ $car->quantity }}">
                 @if($errors->has('quantity'))
                     @foreach($errors->get('quantity') as $message)
                         <p class="text-danger">
@@ -260,16 +260,25 @@
     </div>
 
 @endsection
-<script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- bs-custom-file-input -->
-<script src="{{ asset('adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
-<!-- Page specific script -->
-<script>
-    $(function () {
-        bsCustomFileInput.init();
-    });
-</script>
+@section('customScript')
+    <!-- bs-custom-file-input -->
+    <script src="{{ asset('adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+    <script>
+        $('.number-input').each(function() {
+            var value = $(this).val();
+            value = Intl.NumberFormat().format(value);
+            $(this).val(value);
+        })
+
+        $('.number-input').on('keyup', function () {
+            var n = parseInt($(this).val().replace(/\D/g,''),10);
+            $(this).val(n.toLocaleString())
+        })
+    </script>
+@endsection

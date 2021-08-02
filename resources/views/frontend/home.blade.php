@@ -51,7 +51,7 @@
                                                 <div class="deals_item_name"><a href="#">{{ $mostViewCars->get($i)->name }}</a></div>
                                             </div>
                                             <div class="deals_info_line d-flex flex-row justify-content-start">
-                                                <div class="deals_item_price">{{ $mostViewCars->get($i)->price }} VND</div>
+                                                <div class="deals_item_price number_output">{{ $mostViewCars->get($i)->price }}</div>
                                             </div>
                                             <div class="available">
                                                 <div class="available_line d-flex flex-row justify-content-start">
@@ -95,7 +95,7 @@
                                             <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{ asset('storage/' . $mostViewCars->get($i)->image) }}" alt="" style="max-width: 80%"></div>
                                                 <div class="product_content">
-                                                    <div class="product_price discount">{{ $mostViewCars->get($i)->price }} VND</div>
+                                                    <div class="product_price number_output">{{ $mostViewCars->get($i)->price }}</div>
                                                     <div class="product_name"><div><a href="product.html">{{ $mostViewCars->get($i)->name }}</a></div></div>
                                                     <div class="product_extras">
                                                         <button class="product_cart_button">Add to Cart</button>
@@ -2687,4 +2687,14 @@
     </div>
 
 @endsection
-
+@section('customScript')
+    <script>
+        $(document).ready(function() {
+            $('.number_output').each(function () {
+                var value = $(this).html();
+                value = Intl.NumberFormat().format(value);
+                $(this).html(value);
+            })
+        })
+    </script>
+@endsection
