@@ -20,3 +20,10 @@ Những chức năng đã làm:
     + Thêm chức năng đăng ký thành viên, đăng nhập
     + Sửa giao diện, thêm, hiển thị và sửa của admin
     + Tạo api cho đối tượng ô tô
+- 30/07/2021:
+    + Thêm dữ liệu cho trang chủ phần khách hàng
+    + Thực hành ajax phân trang
+- 31/07/2021:
+    + Thực hành ajax thêm dữ liệu
+    + Format dữ liệu dạng số với jquery
+    + Cài đặt đa ngôn ngữ cho ứng dụng
