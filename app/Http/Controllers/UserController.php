@@ -8,14 +8,42 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function showPageGuest()
+
+    {
+//
+//        if (!$this->userCan('view-page-guest')) {
+//
+//            abort('403', __('Bạn không có quyền thực hiện thao tác này'));
+//
+//        }
+        $mostViewCars = Car::orderByDesc('view_count')->limit('19')->get();
+        return view("frontend.home", compact('mostViewCars'));
+
+    }
+
+
+    public function showPageAdmin()
+
+    {
+
+        if (!$this->userCan('view-page-admin')) {
+
+            abort('403', __('Bạn không có quyền thực hiện thao tác này'));
+
+        }
+
+        return view("admin.home");
+
+    }
+
     public function home(Request $request)
     {
         if ($request->session()->get('user') && $request->session()->get('user')->role == 'admin')
         {
-            return view('admin.home');
+            return redirect()->route('admin.home');
         } else {
-            $mostViewCars = Car::orderByDesc('view_count')->limit('19')->get();
-            return view('frontend.home', compact('mostViewCars'));
+            return redirect()->route('customer.home');
         }
     }
 

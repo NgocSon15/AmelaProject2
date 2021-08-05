@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\CheckLogin;
+use App\Http\Controllers\SocialAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,10 @@ Route::group(['middleware' => 'locale'], function() {
     Route::get('/register', [UserController::class, 'showRegister'])->name('show.register');
     Route::post('/register', [UserController::class, 'register'])->name('register');
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/guest', [UserController::class, 'showPageGuest'])->name('customer.home');
+    Route::get('/admin', [UserController::class, 'showPageAdmin'])->name('admin.home');
+    Route::get('/redirect/{social}', [SocialAuthController::class, 'redirect'])->name('social.redirect');
+    Route::get('/callback/{social}', [SocialAuthController::class, 'callback'])->name('social.callback');
 
     Route::get('/change-language/{language}', [LanguageController::class, 'changeLanguage'])->name('change.language');
 

@@ -11,6 +11,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
+        "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
@@ -56,5 +57,10 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "post-install-cmd": [
+        "php artisan clear-compiled",
+        "chmod -R 777 public/",
+        "chmod -R 777 public/"
+    ]
 }

@@ -1,8 +1,12 @@
 @extends('admin.layout')
 
-@section('title', 'Car List')
+@section('title')
+    {{ __('language.carList') }}
+@endsection
 @section('active1', 'active')
-@section('content-name', 'Danh sách xe')
+@section('content-name')
+    {{ __('language.carList') }}
+@endsection
 @section('content')
     <div class="col-12">
         @if (Session::has('success'))
@@ -17,21 +21,21 @@
             @csrf
             <div class="d-flex">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search" name="keyword"
+                    <input type="text" class="form-control" placeholder="{{ __('language.search') }}" name="keyword"
                         @if(isset($keyword))
                             value="{{$keyword}}"
                         @endif
                     >
                 </div>
-                <button type="submit" class="btn btn-primary mb-3 ml-1">Tìm kiếm</button>
+                <button type="submit" class="btn btn-primary mb-3 ml-1">{{ __('language.search') }}</button>
             </div>
         </form>
         <div class="d-flex ml-auto">
             <a class="btn btn-primary mb-3" href="" data-toggle="modal" data-target="#brandModal">
-                Lọc
+                {{ __('language.filter') }}
             </a>
             <a href="{{ route('car.create') }}" class="btn btn-success mb-3 ml-1">
-                Thêm mới
+                {{ __('language.add') }}
             </a>
         </div>
     </div>

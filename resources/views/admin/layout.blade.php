@@ -59,20 +59,20 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right p-0">
                         <a href="{{ route('change.language', ['en']) }}" class="dropdown-item @if(App::currentLocale() == 'en') {{'active'}} @endif">
-                            <i class="flag-icon flag-icon-us mr-2"></i> English
+                            <i class="flag-icon flag-icon-us mr-2"></i> {{ __('language.english') }}
                         </a>
                         <a href="{{ route('change.language', ['vi']) }}" class="dropdown-item @if(App::currentLocale() == 'vi') {{'active'}} @endif">
-                            <i class="flag-icon flag-icon-vn mr-2"></i> Vietnam
+                            <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('language.vietnamese') }}
                         </a>
                     </div>
                 </li>
                 @if(Session::has('login') && Session::get('login'))
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ route('logout') }}" class="nav-link">Thoát</a>
+                        <a href="{{ route('logout') }}" class="nav-link">{{ __('language.logout') }}</a>
                     </li>
                 @else
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ route('show.login') }}" class="nav-link">Đăng nhập</a>
+                        <a href="{{ route('show.login') }}" class="nav-link">{{ __('language.login') }}</a>
                     </li>
                 @endif
             </ul>
@@ -100,19 +100,19 @@
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
-                                Danh sách quản lý
+                                {{ __('language.management') }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="{{ route('car.index') }}" class="nav-link @yield('active1')">
-                                    <p>Danh sách xe</p>
+                                    <p>{{ __('language.carList') }}</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('brand.index') }}" class="nav-link @yield('active2')">
-                                    <p>Hãng xe</p>
+                                    <p>{{ __('language.brandList') }}</p>
                                 </a>
                             </li>
                         </ul>

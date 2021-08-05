@@ -3,12 +3,12 @@
         <thead>
         <tr>
             <th style="width: 10px">#</th>
-            <th>Tên xe</th>
-            <th>Giá thành</th>
-            <th>Nhãn hiệu</th>
-            <th>Hình ảnh</th>
-            <th>Số lượng</th>
-            <th>Thao tác</th>
+            <th>{{ __('language.name') }}</th>
+            <th>{{ __('language.price') }}</th>
+            <th>{{ __('language.brand') }}</th>
+            <th>{{ __('language.image') }}</th>
+            <th>{{ __('language.quantity') }}</th>
+            <th>{{ __('language.action') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -21,9 +21,9 @@
                 <td><img src="{{ asset('storage/'. $car->image) }}" style="max-width: 100px"></td>
                 <td class="number_output">{{ $car->quantity }}</td>
                 <td class="d-flex">
-                    <a href="{{ route('car.show', $car->id) }}" class="btn-sm btn-info mr-1">Xem</a>
-                    <a href="{{ route('car.edit', $car->id) }}" class="btn-sm btn-secondary mr-1">Sửa</a>
-                    <a href="{{ route('car.delete', $car->id) }}" class="btn-sm btn-danger">Xóa</a>
+                    <a href="{{ route('car.show', $car->id) }}" class="btn-sm btn-info mr-1">{{ __('language.show') }}</a>
+                    <a href="{{ route('car.edit', $car->id) }}" class="btn-sm btn-secondary mr-1">{{ __('language.edit') }}</a>
+                    <a href="{{ route('car.delete', $car->id) }}" class="btn-sm btn-danger">{{ __('language.delete') }}</a>
                 </td>
             </tr>
         @endforeach

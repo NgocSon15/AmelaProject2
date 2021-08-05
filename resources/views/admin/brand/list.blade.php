@@ -32,7 +32,7 @@
         function fetch_data(page)
         {
             $.ajax({
-                'url': '/brand/fetch_data?page=' + page,
+                'url': '{{ route('brand.fetch_data') }}?page=' + page,
                 success:function (brand)
                 {
                     $('#table_data').html(brand);

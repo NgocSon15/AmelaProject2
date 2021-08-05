@@ -13,7 +13,6 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $brands = Brand::paginate(5);
-
         if ($request->ajax())
         {
             return view('admin.brand.listContent', compact('brands'));
