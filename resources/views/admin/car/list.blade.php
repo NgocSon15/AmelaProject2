@@ -104,11 +104,15 @@
             function fetch_data(page)
             {
                 $.ajax({
-                    //'url': '/car/fetch_data?page=' + page,
                     'url': '{{ route('car.fetch_data') }}?page=' + page,
                     success:function (brand)
                     {
                         $('#table_data').html(brand);
+                        $('.number_output').each(function () {
+                            var value = $(this).html();
+                            value = Intl.NumberFormat().format(value);
+                            $(this).html(value);
+                        })
                     }
                 })
             }

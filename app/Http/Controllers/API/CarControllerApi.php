@@ -23,7 +23,6 @@ class CarControllerApi extends Controller
     public function index()
     {
         $cars = $this->carService->getAll();
-
         return response()->json($cars, 200);
     }
 

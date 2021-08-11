@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use App\Http\Controllers\API\CarControllerApi;
+
 
 class CarTest extends TestCase
 {
@@ -11,8 +13,12 @@ class CarTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function testIndex()
     {
-        $this->assertTrue(true);
+        $result = CarControllerApi::index();
+        $expected = 5;
+        dd($result);
+        $actual = count($result);
+        $this->assertEquals($expected, $actual);
     }
 }

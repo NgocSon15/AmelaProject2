@@ -26,7 +26,9 @@ class CarRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'price' => 'required|numeric|min:0',
+            'sale_percent' => 'nullable|min:0',
             'brand_id' => 'required',
+            'car_model_id' => 'required',
             'manufactured_date' => 'nullable|date',
             'engine_capacity' => 'nullable|numeric|gt:0',
             'seat_number' => 'nullable|integer|min:1',
@@ -46,6 +48,7 @@ class CarRequest extends FormRequest
             'price.numeric' => 'Giá xe phải là số',
             'price.min' => 'Giá xe không được nhỏ hơn 0',
             'brand_id.required' => 'Bạn phải chọn nhãn hiệu xe',
+            'car_model_id.required' => 'Bạn phải chọn kiểu dáng xe',
             'manufactured_date.date' => 'Ngày sản xuất không hợp lệ',
             'engine_capacity.numeric' => 'Dung tích động cơ phải là số',
             'engine_capacity.gt' => 'Dung tích động cơ phải lớn hơn 0',

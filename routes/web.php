@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\CheckLogin;
 use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,19 @@ Route::group(['middleware' => 'locale'], function() {
             Route::get('delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
             Route::post('delete/{id}', [BrandController::class, 'destroy'])->name('brand.destroy');
         });
+
+        Route::prefix('order')->group(function() {
+            Route::post('create', [OrderController::class, 'store'])->name('order.store');
+            Route::get('/', [OrderController::class, 'index'])->name('order.index');
+            Route::get('/fetch_data', [OrderController::class, 'index'])->name('order.fetch_data');
+            Route::get('/show/{id}', [OrderController::class, 'show'])->name('order.show');
+        });
+    });
+
+    Route::prefix('cart')->group(function() {
+        Route::post('/add', [CartController::class, 'addToCart'])->name('cart.add');
+        Route::get('/', [CartController::class, 'index'])->name('cart.index');
+        Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
     });
 
 });

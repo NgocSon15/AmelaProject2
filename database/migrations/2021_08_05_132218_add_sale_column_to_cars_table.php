@@ -14,7 +14,9 @@ class AddSaleColumnToCarsTable extends Migration
     public function up()
     {
         Schema::table('cars', function (Blueprint $table) {
-            //
+            $table->boolean('onSale')->nullable();
+            $table->smallInteger('salePercent')->nullable();
+            $table->string('image')->nullable()->change();
         });
     }
 

@@ -30,7 +30,7 @@
             @endif
 
             <form action="{{ route('login') }}" method="post">
-                @csrf
+                {{ csrf_field() }}
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Email" name="username">
                     <div class="input-group-append">
@@ -68,7 +68,7 @@
                 <a href="{{ route('social.redirect', ['facebook']) }}" class="btn btn-block btn-primary">
                     <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
                 </a>
-                <a href="#" class="btn btn-block btn-danger">
+                <a href="{{ route('social.redirect', ['google']) }}" class="btn btn-block btn-danger">
                     <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                 </a>
             </div>

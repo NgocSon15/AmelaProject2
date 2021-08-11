@@ -15,7 +15,7 @@
             <tr>
                 <td>{{ ++$key }}</td>
                 <td>{{ $brand->name }}</td>
-                <td><img src="{{ asset('storage/'. $brand->image) }}" style="max-width: 100px;"></td>
+                <td><img src="{{ asset('storage/'. $brand->image) }}" style="max-width: 60px;"></td>
                 <td>{{ $brand->founded_date }}</td>
                 <td>{{ $brand->headquarter }}</td>
                 <td class="d-flex">

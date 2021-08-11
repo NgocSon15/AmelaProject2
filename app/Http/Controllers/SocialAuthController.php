@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\SocialAccountService;
+use Illuminate\Support\Facades\Session;
 
 class SocialAuthController extends Controller
 {
@@ -15,7 +16,7 @@ class SocialAuthController extends Controller
 
     public function callback($social)
     {
-        $user = SocialAccountService::createOrGetUser(Socialite::driver($social)->user(), $social);
+        $user = SocialAccountService::createOrGetUser(Socialite::driver($social)->stateless()->user(), $social);
 
         session([
             'login' => 'true',

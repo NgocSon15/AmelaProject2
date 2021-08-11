@@ -30,6 +30,33 @@
                     @endforeach
                 @endif
             </div>
+            <div class="form-group clearfix">
+                <label for="on_sale">Giảm giá:</label>
+                <br>
+                <div class="icheck-success d-inline mr-5">
+                    <input type="radio" id="saleTrue" name="on_sale" value="1" @if(old('on_sale')) {{ 'checked' }} @endif>
+                    <label for="saleTrue">
+                        Giảm giá
+                    </label>
+                </div>
+                <div class="icheck-success d-inline">
+                    <input type="radio" id="saleFalse" value="0" name="on_sale" @if(!old('on_sale')) {{ 'checked' }} @endif>
+                    <label for="saleFalse">
+                        Không giảm giá
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" id="sale_percent_input" style="@if(old('on_sale')) {{ 'display: block' }} @else {{ 'display: none' }} @endif">
+                <label for="sale_percent">Phần trăm giảm giá:</label>
+                <input type="text" class="form-control" id="sale_percent" name="sale_percent" placeholder="Nhập phần trăm giảm giá" value="{{ old('sale_percent') }}">
+                @if($errors->has('salePercent'))
+                    @foreach($errors->get('salePercent') as $message)
+                        <p class="text-danger">
+                            {{ $message }}
+                        </p>
+                    @endforeach
+                @endif
+            </div>
             <div class="form-group">
                 <label for="brand_id">Nhãn hiệu:</label>
                 <select class="form-control" name="brand_id" id="brand_id">
@@ -269,63 +296,84 @@
             bsCustomFileInput.init();
         });
     </script>
-    <script>
-        $('#form').on('submit', function (event) {
-            event.preventDefault();
+{{--    <script>--}}
+{{--        $('#form').on('submit', function (event) {--}}
+{{--            event.preventDefault();--}}
 
-            var token = '{{csrf_token()}}';
-            var name = $('#name').val();
-            var price = $('#price').val();
-            var brand_id = $('#brand_id').val();
-            var car_model_id = $('#car_model_id').val();
-            var fuel = $('#fuel').val();
-            var gearbox = $('#gearbox').val();
-            var origin = $('#origin').val();
-            var color = $('#color').val();
-            var manufactured_date = $('#manufactured_date').val();
-            var engine_capacity = $('#engine_capacity').val();
-            var seat_number = $('#seat_number').val();
-            var door_number = $('#door_number').val();
-            var quantity = $('#quantity').val();
-            var description = $('#description').val();
+{{--            var token = '{{csrf_token()}}';--}}
+{{--            var name = $('#name').val();--}}
+{{--            var price = $('#price').val();--}}
+{{--            var brand_id = $('#brand_id').val();--}}
+{{--            var car_model_id = $('#car_model_id').val();--}}
+{{--            var fuel = $('#fuel').val();--}}
+{{--            var gearbox = $('#gearbox').val();--}}
+{{--            var origin = $('#origin').val();--}}
+{{--            var color = $('#color').val();--}}
+{{--            var manufactured_date = $('#manufactured_date').val();--}}
+{{--            var engine_capacity = $('#engine_capacity').val();--}}
+{{--            var seat_number = $('#seat_number').val();--}}
+{{--            var door_number = $('#door_number').val();--}}
+{{--            var quantity = $('#quantity').val();--}}
+{{--            var description = $('#description').val();--}}
+{{--            var on_sale = $('input:radio[name="on_sale"]').val();--}}
+{{--            var sale_percent = $('#sale_percent').val();--}}
 
-            var file_data = $('#image').prop('files')[0];
-            var form_data = new FormData();
-            form_data.append('_token', token);
-            form_data.append('name', name);
-            form_data.append('price', price);
-            form_data.append('brand_id', brand_id);
-            form_data.append('car_model_id', car_model_id);
-            form_data.append('fuel', fuel);
-            form_data.append('gearbox', gearbox);
-            form_data.append('origin', origin);
-            form_data.append('color', color);
-            form_data.append('manufactured_date', manufactured_date);
-            form_data.append('engine_capacity', engine_capacity);
-            form_data.append('seat_number', seat_number);
-            form_data.append('door_number', door_number);
-            form_data.append('quantity', quantity);
-            form_data.append('description', description);
-            form_data.append('image', file_data);
+{{--            var file_data = $('#image').prop('files')[0];--}}
+{{--            var form_data = new FormData();--}}
+{{--            form_data.append('_token', token);--}}
+{{--            form_data.append('name', name);--}}
+{{--            form_data.append('price', price);--}}
+{{--            form_data.append('brand_id', brand_id);--}}
+{{--            form_data.append('car_model_id', car_model_id);--}}
+{{--            form_data.append('fuel', fuel);--}}
+{{--            form_data.append('gearbox', gearbox);--}}
+{{--            form_data.append('origin', origin);--}}
+{{--            form_data.append('color', color);--}}
+{{--            form_data.append('manufactured_date', manufactured_date);--}}
+{{--            form_data.append('engine_capacity', engine_capacity);--}}
+{{--            form_data.append('seat_number', seat_number);--}}
+{{--            form_data.append('door_number', door_number);--}}
+{{--            form_data.append('quantity', quantity);--}}
+{{--            form_data.append('description', description);--}}
+{{--            form_data.append('image', file_data);--}}
 
-            $.ajax({
-                url: '{{ route('car.store') }}',
-                dataType: 'text',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                type: 'post',
-                success: function(res) {
-                    window.location.href = '{{ route('car.index') }}'
-                }
-            })
-        });
-    </script>
+{{--            $.ajax({--}}
+{{--                url: '{{ route('car.store') }}',--}}
+{{--                dataType: 'text',--}}
+{{--                cache: false,--}}
+{{--                contentType: false,--}}
+{{--                processData: false,--}}
+{{--                data: form_data,--}}
+{{--                type: 'post',--}}
+{{--                success: function(res) {--}}
+{{--                    window.location.href = '{{ route('car.index') }}'--}}
+{{--                }--}}
+{{--            })--}}
+{{--        });--}}
+{{--    </script>--}}
     <script>
         $('.number-input').on('keyup', function () {
             var n = parseInt($(this).val().replace(/\D/g,''),10);
             $(this).val(n.toLocaleString())
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('input:radio[name="on_sale"]').change(
+                function(){
+                    if ($(this).is(':checked') && $(this).val() == 1) {
+                        $('#sale_percent_input').css('display', 'block');
+                    } else {
+                        $('#sale_percent_input').css('display', 'none');
+                    }
+                });
+        })
+    </script>
+    <script>
+        $('#form').submit(function () {
+            var value = $('#price').val();
+            value = value.replaceAll(',', '');
+            $('#price').val(value);
         })
     </script>
 @endsection

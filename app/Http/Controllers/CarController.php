@@ -55,6 +55,8 @@ class CarController extends Controller
         $car->seat_number =  $request->seat_number;
         $car->door_number =  $request->door_number;
         $car->quantity =  $request->quantity;
+        $car->onSale = $request->on_sale;
+        $car->salePercent = $request->sale_percent;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -102,6 +104,8 @@ class CarController extends Controller
         $car->seat_number = $request->input('seat_number');
         $car->door_number = $request->input('door_number');
         $car->quantity = $request->input('quantity');
+        $car->onSale = $request->on_sale;
+        $car->salePercent = $request->sale_percent;
 
         if ($request->hasFile('image')) {
             $currentImg = $car->image;

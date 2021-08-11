@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/plugins/slick-1.8.0/slick.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/main_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/responsive.css') }}">
+    @yield('link')
 </head>
 
 <body>
@@ -30,8 +31,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('frontend/images/phone.png') }}" alt=""></div>+38 068 005 3570</div>
-                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('frontend/images/mail.png') }}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('frontend/images/phone.png') }}" alt=""></div>{{ \App\Models\Config::first()->hotline }}</div>
+                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('frontend/images/mail.png') }}" alt=""></div><a href="mailto:fastsales@gmail.com">{{ \App\Models\Config::first()->email }}</a></div>
                         <div class="top_bar_content ml-auto">
                             <div class="top_bar_menu">
                                 <ul class="standard_dropdown top_bar_dropdown">
@@ -41,14 +42,6 @@
                                             <li><a href="#">Italian</a></li>
                                             <li><a href="#">Spanish</a></li>
                                             <li><a href="#">Japanese</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
-                                        <ul>
-                                            <li><a href="#">EUR Euro</a></li>
-                                            <li><a href="#">GBP British Pound</a></li>
-                                            <li><a href="#">JPY Japanese Yen</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -112,24 +105,16 @@
                     <!-- Wishlist -->
                     <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
                         <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
-                            <div class="wishlist d-flex flex-row align-items-center justify-content-end">
-                                <div class="wishlist_icon"><img src="{{ asset('frontend/images/heart.png') }}" alt=""></div>
-                                <div class="wishlist_content">
-                                    <div class="wishlist_text"><a href="#">Wishlist</a></div>
-                                    <div class="wishlist_count">115</div>
-                                </div>
-                            </div>
-
                             <!-- Cart -->
                             <div class="cart">
                                 <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                     <div class="cart_icon">
                                         <img src="{{ asset('frontend/images/cart.png') }}" alt="">
-                                        <div class="cart_count"><span>10</span></div>
+                                        <div class="cart_count" id="cart_count"><span>{{ Session::has('cart') ? count(Session::get('cart')) : 0 }}</span></div>
                                     </div>
                                     <div class="cart_content">
-                                        <div class="cart_text"><a href="#">Cart</a></div>
-                                        <div class="cart_price">$85</div>
+                                        <div class="cart_text"><a href="{{ route('cart.index') }}">Cart</a></div>
+                                        <div class="cart_price  number_output" id="order_price">{{ Session::get('price') ?? 0 }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -349,7 +334,7 @@
 
     <!-- Footer -->
     @section('footer')
-    <footer class="footer">
+    <footer class="footer" style="box-shadow: 0px 5px 20px rgb(0 0 0 / 10%);">
         <div class="container">
             <div class="row">
 
@@ -359,10 +344,9 @@
                             <div class="logo"><a href="#">OneTech</a></div>
                         </div>
                         <div class="footer_title">Got Question? Call Us 24/7</div>
-                        <div class="footer_phone">+38 068 005 3570</div>
+                        <div class="footer_phone">{{ \App\Models\Config::first()->hotline }}</div>
                         <div class="footer_contact_text">
-                            <p>17 Princess Road, London</p>
-                            <p>Grester London NW18JR, UK</p>
+                            <p>{{ \App\Models\Config::first()->address }}</p>
                         </div>
                         <div class="footer_social">
                             <ul>
@@ -465,6 +449,17 @@
 <script src="{{ asset('frontend/plugins/slick-1.8.0/slick.js') }}"></script>
 <script src="{{ asset('frontend/plugins/easing/easing.js') }}"></script>
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
+<script src="{{ asset('frontend/js/jquery.session.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.number_output').each(function () {
+            var value = $(this).html();
+            value = Intl.NumberFormat().format(value);
+            $(this).html(value);
+        })
+    })
+
+</script>
 @yield('customScript')
 </body>
 

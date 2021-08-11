@@ -115,6 +115,11 @@
                                     <p>{{ __('language.brandList') }}</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('order.index') }}" class="nav-link @yield('active3')">
+                                    <p>Danh sách đơn hàng</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

@@ -5,7 +5,7 @@
 @section('content-name', 'Thông tin xe')
 @section('content')
     <h3>{{ $car->name }}</h3>
-    <p>Giá: {{ $car->price }}</p>
+    <p>Giá: <span class="number_output">{{ $car->price }}</span></p>
     <p>Nhãn hiệu: {{ $car->brand->name }}</p>
 
     @if($car->carModel)
@@ -20,7 +20,7 @@
     <p>Dung tích động cơ: {{ $car->engine_capacity }}L</p>
     <p>Số ghế: {{ $car->seat_number }}</p>
     <p>Số cửa: {{ $car->door_number }}</p>
-    <p>Số lượng xe: {{ $car->quantity }}</p>
+    <p>Số lượng xe: <span class="number_output">{{ $car->quantity }}</span></p>
     <p>Ngày sản xuất: {{ $car->manufactured_date }}</p>
     <p>Mô tả: {{ $car->description }}</p>
 

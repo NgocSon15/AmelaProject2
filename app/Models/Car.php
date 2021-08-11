@@ -20,4 +20,9 @@ class Car extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'orderdetails', 'car_id', 'order_id');
+    }
 }

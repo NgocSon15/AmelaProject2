@@ -36,9 +36,23 @@
                 success:function (brand)
                 {
                     $('#table_data').html(brand);
+                    $('.number_output').each(function () {
+                        var value = $(this).html();
+                        value = Intl.NumberFormat().format(value);
+                        $(this).html(value);
+                    })
                 }
             })
         }
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $('.number_output').each(function () {
+            var value = $(this).html();
+            value = Intl.NumberFormat().format(value);
+            $(this).html(value);
+        })
     })
 </script>
 @endsection

@@ -14,7 +14,8 @@ class DropColumnsInOrderdetailsTable extends Migration
     public function up()
     {
         Schema::table('orderdetails', function (Blueprint $table) {
-            //
+            $table->dropColumn('quantityOrdered');
+            $table->dropColumn('priceEach');
         });
     }
 

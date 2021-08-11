@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Config;
 use App\Models\User;
 use App\Models\Car;
 use Illuminate\Http\Request;
@@ -18,7 +20,19 @@ class UserController extends Controller
 //
 //        }
         $mostViewCars = Car::orderByDesc('view_count')->limit('19')->get();
-        return view("frontend.home", compact('mostViewCars'));
+        $onSaleCars = Car::where('onSale', 1)->orderByDesc('salePercent')->limit('16')->get();
+        $brands = Brand::all();
+        $newArrivals = Car::orderByDesc('created_at')->limit('21')->get();
+        $bestSellers = Car::withCount('orders')->orderByDesc('orders_count')->limit('20')->get();
+        $banner1_id = Config::first()->banner1_id;
+        $banner2_id = Config::first()->banner2_id;
+        $banner3_id = Config::first()->banner3_id;
+        $banner4_id = Config::first()->banner4_id;
+        $carBanner1 = Car::findOrFail($banner1_id);
+        $carBanner2 = Car::findOrFail($banner2_id);
+        $carBanner3 = Car::findOrFail($banner3_id);
+        $carBanner4 = Car::findOrFail($banner4_id);
+        return view("frontend.home", compact('mostViewCars', 'onSaleCars', 'brands', 'newArrivals', 'bestSellers', 'carBanner1', 'carBanner2', 'carBanner3', 'carBanner4'));
 
     }
 

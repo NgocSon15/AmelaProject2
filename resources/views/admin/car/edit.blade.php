@@ -7,7 +7,7 @@
 @section('content')
     <div style="padding-bottom: 16px">
         <h3>{{ $car->name }}</h3>
-        <form method="post" action="{{ route('car.update', $car->id) }}" enctype="multipart/form-data">
+        <form method="post" id="form" action="{{ route('car.update', $car->id) }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Tên xe:</label>
@@ -25,6 +25,33 @@
                 <input type="text" class="number-input form-control" id="price" name="price" placeholder="Nhập giá xe" value="{{ $car->price }}">
                 @if($errors->has('price'))
                     @foreach($errors->get('price') as $message)
+                        <p class="text-danger">
+                            {{ $message }}
+                        </p>
+                    @endforeach
+                @endif
+            </div>
+            <div class="form-group clearfix">
+                <label for="on_sale">Giảm giá:</label>
+                <br>
+                <div class="icheck-success d-inline mr-5">
+                    <input type="radio" id="saleTrue" name="on_sale" value="1" @if($car->onSale) {{ 'checked' }} @endif>
+                    <label for="saleTrue">
+                        Giảm giá
+                    </label>
+                </div>
+                <div class="icheck-success d-inline">
+                    <input type="radio" id="saleFalse" value="0" name="on_sale" @if(!$car->onSale) {{ 'checked' }} @endif>
+                    <label for="saleFalse">
+                        Không giảm giá
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" id="sale_percent_input" style="@if($car->onSale) {{ 'display: block' }} @else {{ 'display: none' }} @endif">
+                <label for="sale_percent">Phần trăm giảm giá:</label>
+                <input type="text" class="form-control" id="sale_percent" name="sale_percent" placeholder="Nhập phần trăm giảm giá" value="{{ $car->salePercent }}">
+                @if($errors->has('salePercent'))
+                    @foreach($errors->get('salePercent') as $message)
                         <p class="text-danger">
                             {{ $message }}
                         </p>
@@ -213,7 +240,7 @@
             </div>
             <div class="form-group">
                 <label for="quantity">Số lượng:</label>
-                <input type="text" class="number-input form-control"  name="quantity" value="{{ $car->quantity }}">
+                <input type="text" class="number-input form-control" id="quantity" name="quantity" value="{{ $car->quantity }}">
                 @if($errors->has('quantity'))
                     @foreach($errors->get('quantity') as $message)
                         <p class="text-danger">
@@ -279,6 +306,27 @@
         $('.number-input').on('keyup', function () {
             var n = parseInt($(this).val().replace(/\D/g,''),10);
             $(this).val(n.toLocaleString())
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('input:radio[name="on_sale"]').change(function() {
+                if ($(this).is(':checked') && $(this).val() == 1) {
+                    $('#sale_percent_input').css('display', 'block');
+                } else {
+                    $('#sale_percent_input').css('display', 'none');
+                }
+            });
+        })
+    </script>
+    <script>
+        $('#form').submit(function () {
+            var price = $('#price').val();
+            price = price.replaceAll(',', '');
+            $('#price').val(price);
+            var quantity = $('#quantity').val();
+            quantity = quantity.replaceAll(',', '');
+            $('#quantity').val(quantity);
         })
     </script>
 @endsection
